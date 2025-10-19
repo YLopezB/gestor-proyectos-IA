@@ -1,0 +1,21 @@
+import prisma from "../../prismaCliente.js";
+
+const create = async (req, res, next) => {
+  try {
+    const { nombre, descripcion, estadoID, fechaInicio, fechaFin } = req.body;
+    const createProject = await prisma.proyecto.create({
+      data: {
+        nombre,
+        descripcion,
+        estadoID,
+        fechaInicio: new Date(fechaInicio),
+        fechaFin: new Date(fechaFin),
+      },
+    });
+    return res.status(201).json(createProject);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export default create;
