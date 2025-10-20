@@ -3,7 +3,7 @@ import prisma from "../../prismaCliente.js";
 const create = async (req, res, next) => {
   try {
     const { nombre, descripcion, estadoID, fechaInicio, fechaFin } = req.body;
-    const createProject = await prisma.proyecto.create({
+    const data = await prisma.proyecto.create({
       data: {
         nombre,
         descripcion,
@@ -12,8 +12,13 @@ const create = async (req, res, next) => {
         fechaFin: new Date(fechaFin),
       },
     });
-    return res.status(201).json(createProject);
+    return res.status(201).json({
+      success: true,
+      message: "proyecto creado con exito",
+      data
+    });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

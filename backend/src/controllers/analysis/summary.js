@@ -10,9 +10,13 @@ const summary = async (req, res, next) => {
     }
 
     const texto = proyectos.map((p) => p.descripcion).join("\n");
-    const resumen = await aiService(texto);
+    const data = await aiService(texto);
 
-    return res.status(200).json({ resumen });
+    return res.status(200).json({ 
+      success: true,
+      message: "Se ha generado el informe",
+      data
+     });
   } catch (error) {
     console.error("Error en resumen:", error);
     next(error);
